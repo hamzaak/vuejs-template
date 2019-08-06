@@ -1,0 +1,26 @@
+/* lobster-regular - latin */
+@font-face {
+  font-family: lobster;
+  font-style: normal;
+  font-weight: 400;
+  src: url('../assets/fonts/lobster-v22-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Lobster Regular'), local('Lobster-Regular'),
+       url('../assets/fonts/lobster-v22-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../assets/fonts/lobster-v22-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../assets/fonts/lobster-v22-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../assets/fonts/lobster-v22-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../assets/fonts/lobster-v22-latin-regular.svg#Lobster') format('svg'); /* Legacy iOS */
+}
+
+.el-menu-item-logo {
+  opacity: 1;
+  cursor: pointer;
+  font-family: lobster;
+  font-size: 18pt;
+  color: #409eff !important;
+}
+
+.navbar {
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+  border-bottom: 1px solid #e2e2e2;
+}
