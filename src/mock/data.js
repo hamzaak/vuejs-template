@@ -20,7 +20,7 @@ export const accounts = [
   { id: 2, name: "Citigroup", currencyId: 1, directoryId: 1, description: "Saving deposit account", type: 1 },
   { id: 3, name: "Bank of America", currencyId: 2, directoryId: 2, description: "Gold investment account", type: 1 },
   { id: 4, name: "Citigroup", currencyId: 1, directoryId: 3, description: "Main credit card", type: 2 },
-  { id: 5, name: "Citigroup", currencyId: 1, directoryId: 3, description: "My son credit card", type: 2 },
+  { id: 5, name: "Citigroup (My Son)", currencyId: 1, directoryId: 3, description: "My son credit card", type: 2 },
 ];
 
 export const transactions = [

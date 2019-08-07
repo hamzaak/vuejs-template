@@ -27,12 +27,18 @@ body {
 form {
   margin-top:10px;
 }
+.el-input.is-disabled .el-input__inner {
+  color:#606266 !important;
+}
 
 .no-top-margin {
   margin-top:0;
 }
 .top-margin-10 {
   margin-top:10px;
+}
+.top-margin-20 {
+  margin-top:20px;
 }
 
 .block {

@@ -1,7 +1,7 @@
 <template>
   <el-card class="box-card">
     <page-header :onBack="_onCancel">
-      <template v-slot:left>Money Tranfer</template>
+      <template v-slot:left>Tranfer</template>
       <template v-slot:right>
         <el-tooltip effect="dark" content="Save" placement="bottom">
           <el-button type="primary" size="mini" :loading="form.loading" plain @click="_onSave()">
@@ -18,23 +18,44 @@
     <el-form :model="form" :ref="form.name" :rules="rules" label-width="120px" label-position="left">
       <el-row :gutter="24">
         <el-col :span="12">
-          <el-form-item label="From Account">
-            <el-cascader v-model="form.fromAccountId" :options="this.form.accountOptions" class="block" />
+          <el-divider content-position="left">From Details</el-divider>     
+          <el-form-item label="Account" class="top-margin-20">
+            <el-cascader v-model="form.fromAccountId" :options="this.form.accountOptions" class="block" @change="_onFromAccountChange"/>
           </el-form-item>
-          <el-form-item label="Date">
+          <el-form-item label="Amount">
+            <el-input-number v-model="form.fromAmount" controls-position="right" class="block"  @change="_onFromAmountChange"/>
+          </el-form-item>
+          <el-form-item label="Currency Value" >
+            <el-input-number v-model="form.fromAccount.currency.value" controls-position="right" class="block" :disabled="true"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-divider content-position="left">To Details</el-divider> 
+          <el-form-item label="Account" class="top-margin-20">
+            <el-cascader v-model="form.toAccountId" :options="this.form.accountOptions" class="block" @change="_onToAccountChange"/>
+          </el-form-item>
+          <el-form-item label="Amount" >
+            <el-input-number v-model="form.toAmount" controls-position="right" class="block" :disabled="true"/>
+          </el-form-item>
+          <el-form-item label="Currency Value" >
+            <el-input-number v-model="form.toAccount.currency.value" controls-position="right" class="block" :disabled="true"/>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-divider content-position="left">Common Details</el-divider>
+      <el-row :gutter="24" class="top-margin-20">
+        <el-col :span="12">
+           <el-form-item label="Date">
             <el-date-picker
               type="date" :clearable="false" :editable="false" placeholder="Pick a date" v-model="form.date"
               format="dd.MM.yyyy" value-format="yyyy-MM-dd" class="block"
             />
           </el-form-item>
+           <el-form-item label="Commission">
+            <el-input-number v-model="form.commission" controls-position="right" class="block"/>
+          </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="To Account">
-            <el-cascader v-model="form.toAccountId" :options="this.form.accountOptions" class="block" />
-          </el-form-item>
-          <el-form-item label="Amount">
-            <el-input-number v-model="form.amount" controls-position="right" class="block"/>
-          </el-form-item>
           <el-form-item label="Description" prop="description">
             <el-input type="textarea" v-model="form.description" class="block"/>
           </el-form-item>
@@ -45,6 +66,7 @@
 </template>
 
 <script>
+import AccountsApi from "../../api/accountsApi";
 import TransactionsApi from "../../api/transactionsApi";
 import PageHeader from "../../components/PageHeader";
 
@@ -58,10 +80,22 @@ export default {
       form: {
         name: "entity-form",
         accountOptions: [],
+        fromAccount: {
+          currency: {
+            value: 1
+          }
+        },
         fromAccountId: ["0", 0],
+        fromAmount: 0,
+        toAccount: {
+          currency: {
+            value: 1
+          }
+        },
         toAccountId: ["0", 0],
+        toAmount: 0,
         date: new Date().toISOString().slice(0, 10),
-        amount: 100,
+        commission: 0,
         description: "",
         loading: false
       },
@@ -94,8 +128,9 @@ export default {
         const dto = {
           fromAccountId: parseInt(this.form.fromAccountId[1]),
           toAccountId: parseInt(this.form.toAccountId[1]),
+          amount: this.form.fromAmount,
+          commission: this.form.commission,
           date: this.form.date,
-          amount: this.form.amount,
           description: this.form.description
         };
         TransactionsApi.transfer(dto)
@@ -111,6 +146,24 @@ export default {
     },
     _onCancel() {
       this.$router.back();
+    },
+    _onFromAccountChange(value) {
+      const accountId = value[1];
+      AccountsApi.get(accountId)
+        .then(res => {
+          this.form.fromAccount = res;
+        }).catch(err => console.log(err));
+    },
+    _onToAccountChange(value) {
+      const accountId = value[1];
+      AccountsApi.get(accountId)
+        .then(res => {
+          this.form.toAccount = res;
+        }).catch(err => console.log(err));
+    },
+    _onFromAmountChange(value) {
+      this.form.fromAmount = value ? value: 0;
+      this.form.toAmount = this.form.fromAmount * this.form.fromAccount.currency.value / this.form.toAccount.currency.value;
     },
     createAccountOptions() {
       const options = [];
@@ -139,6 +192,12 @@ export default {
     if(acc) {
       this.form.fromAccountId = [`directory-${acc.directoryId}`, acc.id];
     }
+
+    AccountsApi.get(prmAccountId)
+      .then(res => {
+        this.form.fromAccount = res;
+      }).catch(err => console.log(err));
+    // this._onFromAccountChange(prmAccountId);
   }
 };
 </script>

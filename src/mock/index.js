@@ -297,6 +297,39 @@ export default {
       });
     });
 
+    mock.onPost("/transactions/transfer").reply(config => {
+      const dto = JSON.parse(config.data);
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          const fromAccount = _accounts.filter(x => x.id === dto.fromAccountId)[0];
+          const toAccount = _accounts.filter(x => x.id === dto.toAccountId)[0];
+          
+          const fromTransaction = {
+            id: uuid4(),
+            accountId: dto.fromAccountId,
+            date: dto.date,
+            amount: dto.amount + dto.commission,
+            type: 2,
+            description: dto.description
+          };
+
+          const toAmount = dto.amount * fromAccount.currency.value / toAccount.currency.value;
+          const toTransaction = {
+            id: uuid4(),
+            accountId: dto.toAccountId,
+            date: dto.date,
+            amount: toAmount,
+            type: 1,
+            description: dto.description
+          };
+
+          _transactions.push(fromTransaction);
+          _transactions.push(toTransaction);
+          resolve([200, {}]);
+        }, 100);
+      });
+    });
+
     mock.onPost("/transactions/delete").reply(config => {
       const id = config.params.id;
       return new Promise((resolve, reject) => {

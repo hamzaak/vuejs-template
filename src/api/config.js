@@ -1,11 +1,11 @@
-let BASE_URL = "http://localhost:58094/api"; //api development address
+let BASE_URL = "http://localhost:58094/api";
 
 const env = process.env.NODE_ENV.trim();
 
 if (env === "production") {
-  BASE_URL = "http://localhost:8888/api"; //api production address
+  BASE_URL = "http://localhost:8888/api";
 } else if (env === "mock") {
-  BASE_URL = ""; //mock api base url is blank
+  BASE_URL = "";
 }
 
 console.log(`%cENV: ${env}`, 'background: #222; color: #bada55');
