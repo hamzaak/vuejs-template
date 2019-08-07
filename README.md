@@ -61,4 +61,4 @@ Modern browsers and Internet Explorer 10+.
 
 [MIT](https://github.com/hamzaak/ponenteui/LICENSE)
 
-Copyright (c) 2017-present PanJiaChen
+Copyright (c) 2019-present hamzaak
