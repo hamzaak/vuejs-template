@@ -4,12 +4,12 @@
       <el-table-column prop="name" label="" />
       <el-table-column align="right">
         <template slot-scope="scope">
-          <el-tooltip effect="dark" :content="scope.row.type == 0 ? 'Update Directory': 'Update Account'" placement="left">
+          <el-tooltip effect="dark" :content="scope.row.type == 0 ? $t('updateDirectory'): $t('updateAccount')" placement="left">
             <el-button type="warning" size="mini" plain @click="_onUpdateLinkClick(scope.row.id, scope.row.type)">
               <v-icon name="pencil-alt" />
             </el-button>
           </el-tooltip>
-          <el-tooltip effect="dark" :content="scope.row.type == 0 ? 'Delete Directory': 'Delete Account'" placement="right">
+          <el-tooltip effect="dark" :content="scope.row.type == 0 ? $t('deleteDirectory'): $t('deleteAccount')" placement="right">
             <el-button type="danger" size="mini" plain :loading="deleting" @click="_onDeleteLinkClick(scope.row.id, scope.row.type)">
               <v-icon name="trash-alt" />
             </el-button>
@@ -19,20 +19,20 @@
     </el-table>
     <div class="top-margin-10">
       <el-button type="primary" @click="_onRedirect('/settings/directories/create')" size="mini" plain round>
-        <i class="el-icon-plus" /> Create Directory
+        <i class="el-icon-plus" /> {{$t('createDirectory')}}
       </el-button>
       <el-button type="primary" @click="_onRedirect('/settings/accounts/create')" size="mini" plain round>
-        <i class="el-icon-plus" /> Create Account
+        <i class="el-icon-plus" /> {{$t('createAccount')}}
       </el-button>
     </div>
   </div>
 </template>
 
 <script>
-import * as ACTION from "../../store/constants/actions";
-import * as MODULE from "../../store/constants/modules";
-import DirectoriesApi from "../../api/directoriesApi";
-import AccountsApi from "../../api/accountsApi";
+import * as ACTION from "@/store/constants/actions";
+import * as MODULE from "@/store/constants/modules";
+import DirectoriesApi from "@/api/directoriesApi";
+import AccountsApi from "@/api/accountsApi";
 
 export default {
   name: "account-list",
@@ -94,22 +94,22 @@ export default {
       if (hasAccounts) {
         this.$message({
           type: "warning",
-          message: "Since this directory has some accounts, you can't delete it.",
+          message: this.$t('deleteDirectoryWarningMsg'),
           duration: 0,
           showClose: true
         });
         return;
       }
-      this.$confirm("This will permanently delete the directory. Continue?", "Confirm", {
-          confirmButtonText: "OK",
-          cancelButtonText: "Cancel",
+      this.$confirm(this.$t('deleteDirectoryConfirmMsg'), this.$t('deleteDirectoryConfirmTitle'), {
+          confirmButtonText: this.$t('ok'),
+          cancelButtonText: this.$t('cancel'),
           type: "warning"
         }).then(() => {
           this.deleting = true;
           DirectoriesApi.delete(id)
             .then(res => {
               this.deleting = false;
-              this.$message({ type: "success", message: "Delete completed" });
+              this.$message({ type: "success", message: this.$t('deleteDirectoryCompletedMsg') });
               this.$store.dispatch(`${MODULE.DIRECTORY}/${ACTION.DIRECTORY_DELETE}`, id);
             })
             .catch(err => {
@@ -119,16 +119,16 @@ export default {
         });
     },
     _onDeleteAccount(id) {
-      this.$confirm("This will permanently delete the account and its transactions. Continue?", "Confirm", {
-          confirmButtonText: "OK",
-          cancelButtonText: "Cancel",
+      this.$confirm(this.$t('deleteAccountConfirmMsg'), this.$t('deleteAccountConfirmTitle'), {
+          confirmButtonText: this.$t('ok'),
+          cancelButtonText: this.$t('cancel'),
           type: "warning"
         }).then(() => {
           this.deleting = true;
           AccountsApi.delete(id)
             .then(res => {
               this.deleting = false;
-              this.$message({ type: "success", message: "Delete completed" });
+              this.$message({ type: "success", message: this.$t('deleteAccountCompletedMsg') });
               this.$store.dispatch(`${MODULE.ACCOUNT}/${ACTION.ACCOUNT_DELETE}`, id);
             })
             .catch(err => {

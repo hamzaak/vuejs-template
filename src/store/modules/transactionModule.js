@@ -1,4 +1,4 @@
-import * as ACTION from "../constants/actions";
+import * as ACTION from "@/store/constants/actions";
 
 const state = {
   all: []

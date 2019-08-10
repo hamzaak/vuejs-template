@@ -3,9 +3,9 @@
     <el-col :span="20">
       <el-menu :default-active="currentRoute" mode="horizontal" text-color="#303133">
         <el-menu-item index="ponente" disabled class="el-menu-item-logo">Ponente</el-menu-item>
-        <el-menu-item index="summary" @click="_onRedirect('/summary')">Summary</el-menu-item>
+        <el-menu-item index="summary" @click="_onRedirect('/summary')">{{ $t('summary') }}</el-menu-item>
         <el-submenu index="account">
-          <template slot="title">Accounts</template>
+          <template slot="title">{{ $t('accounts') }}</template>
           <el-submenu v-for="(directory, directoryKey) in directories" :key="directoryKey" :index="`transaction-${directory.id}`">
             <template slot="title">{{ directory.name }}</template>
             <el-menu-item
@@ -17,17 +17,17 @@
             </el-menu-item>
           </el-submenu>
         </el-submenu>
-        <el-menu-item index="settings" @click="_onRedirect('/settings')">Settings</el-menu-item>
+        <el-menu-item index="settings" @click="_onRedirect('/settings')">{{ $t('settings') }}</el-menu-item>
       </el-menu>
     </el-col>
   </el-row>
 </template>
 
 <script>
-import * as ACTION from "../store/constants/actions";
-import * as MODULE from "../store/constants/modules";
-import DirectoriesApi from "../api/directoriesApi";
-import AccountsApi from "../api/accountsApi";
+import * as ACTION from "@/store/constants/actions";
+import * as MODULE from "@/store/constants/modules";
+import DirectoriesApi from "@/api/directoriesApi";
+import AccountsApi from "@/api/accountsApi";
 
 export default {
   name: "navbar",

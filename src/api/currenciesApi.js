@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { BASE_URL } from "./config";
+import { BASE_URL } from "@/api/config";
 
 const currenciesApi = {
   getAll() {

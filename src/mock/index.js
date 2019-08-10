@@ -1,7 +1,7 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import { uuid4 } from "../utils/object-utils";
-import { users, currencies, directories, accounts, transactions } from "./data";
+import { uuid4 } from "@/utils/object-utils";
+import { users, currencies, directories, accounts, transactions } from "@/mock/data";
 let _users = users;
 let _currencies = currencies;
 let _directories = directories;

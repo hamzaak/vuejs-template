@@ -1,14 +1,14 @@
 <template>
   <el-card class="box-card">
     <page-header :onBack="_onCancel">
-      <template v-slot:left>Update Directory</template>
+      <template v-slot:left>{{$t('updateDirectory')}}</template>
       <template v-slot:right>
-        <el-tooltip effect="dark" content="Save" placement="bottom">
-          <el-button type="primary" size="mini" :loading="form.loading" plain @click="_onSave()">
+        <el-tooltip effect="dark" :content="$t('update')" placement="bottom">
+          <el-button type="warning" size="mini" :loading="form.loading" plain @click="_onUpdate()">
             <v-icon name="check" />
           </el-button>
         </el-tooltip>
-        <el-tooltip effect="dark" content="Cancel" placement="bottom">
+        <el-tooltip effect="dark" :content="$t('cancel')" placement="bottom">
           <el-button type="danger" size="mini" plain @click="_onCancel()">
             <v-icon name="times" />
           </el-button>
@@ -18,8 +18,8 @@
     <el-form :model="form" :ref="form.name" :rules="rules" label-width="120px" label-position="left">
       <el-row :gutter="24">
         <el-col :span="12">
-          <el-form-item label="Directory Name">
-            <el-input placeholder="Please input directory name" v-model="form.directoryName" class="block"></el-input>
+          <el-form-item :label="$t('directoryName')">
+            <el-input :placeholder="$t('directoryName')" v-model="form.directoryName" class="block"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -28,10 +28,10 @@
 </template>
 
 <script>
-import * as ACTION from "../../store/constants/actions";
-import * as MODULE from "../../store/constants/modules";
-import DirectoriesApi from "../../api/directoriesApi";
-import PageHeader from "../../components/PageHeader";
+import * as ACTION from "@/store/constants/actions";
+import * as MODULE from "@/store/constants/modules";
+import DirectoriesApi from "@/api/directoriesApi";
+import PageHeader from "@/components/PageHeader";
 
 export default {
   name: "directory-update",
@@ -48,14 +48,14 @@ export default {
       },
       rules: {
           directoryName: [
-            { required: true, message: 'Please input directory name', trigger: 'blur' },
-            { min: 3, message: 'Directory name min length should be 5', trigger: 'blur' }
+            { required: true, message: this.$t('directoryNameRequiredMsg'), trigger: 'blur' },
+            { min: 3, message: this.$t('directoryNameRequiredMinMsg'), trigger: 'blur' }
           ]
         }
     };
   },
   methods: {
-    _onSave() {
+    _onUpdate() {
       this.$refs[this.form.name].validate((valid) => {
         if (!valid) {
           return false;
@@ -69,7 +69,7 @@ export default {
           .then((res) => {
             console.log(res)
             this.form.loading = false;
-            this.$message({ message: "Directory has been updated successfuly.", type: "success" });
+            this.$message({ message: this.$t('updateDirectorySuccessMsg'), type: "success" });
             this.$store.dispatch(`${MODULE.DIRECTORY}/${ACTION.DIRECTORY_UPDATE}`, res);
           })
           .catch(err => {

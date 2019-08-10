@@ -9,13 +9,13 @@
         label-width="0px"
         class="demo-ruleForm login-container"
       >
-        <h3 class="title">Sign in</h3>
+        <h3 class="title">{{$t('signIn')}}</h3>
         <el-form-item prop="username">
           <el-input
             type="text"
             v-model="signinForm.username"
             auto-complete="off"
-            placeholder="Username"
+            :placeholder="$t('username')"
           ></el-input>
         </el-form-item>
         <el-form-item prop="password">
@@ -23,17 +23,17 @@
             type="password"
             v-model="signinForm.password"
             auto-complete="off"
-            placeholder="Password"
+            :placeholder="$t('password')"
           ></el-input>
         </el-form-item>
-        <el-checkbox v-model="signinForm.remember" class="remember">Remember</el-checkbox>
+        <el-checkbox v-model="signinForm.remember" class="remember">{{$t('remember')}}</el-checkbox>
         <el-form-item style="width:100%">
           <el-button
             type="primary"
             style="width:100%"
             @click.native.prevent="login"
             :loading="signing"
-          >Sign in</el-button>
+          >{{$t('signIn')}}</el-button>
         </el-form-item>
       </el-form>
     </el-main>
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import AuthApi from "../api/authApi";
+import AuthApi from "@/api/authApi";
 
 export default {
   data() {
@@ -54,10 +54,10 @@ export default {
       },
       signinRules: {
         username: [
-          { required: true, message: "Username is required", trigger: "blur" }
+          { required: true, message: this.$t('usernameRequiredMsg'), trigger: "blur" }
         ],
         password: [
-          { required: true, message: "Password is required", trigger: "blur" }
+          { required: true, message: this.$t('passwordRequiredMsg'), trigger: "blur" }
         ]
       },
       isRememberChecked: true

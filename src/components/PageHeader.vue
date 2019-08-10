@@ -1,7 +1,7 @@
 <template>
   <div>
     <div slot="header" class="clearfix">
-      <el-tooltip effect="dark" content="Go back" placement="bottom" v-if="onBack">
+      <el-tooltip effect="dark" :content="$t('goBack')" placement="bottom" v-if="onBack">
         <i class="el-icon-back card-header-back-button" @click="onBack()" />
       </el-tooltip>
       <span class="card-header-title">

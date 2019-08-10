@@ -1,10 +1,10 @@
 <template>
   <el-card class="box-card">
     <el-tabs v-model="activeTab" @tab-click="_onTabClick">
-      <el-tab-pane label="Accounts" name="accounts">
+      <el-tab-pane :label="$t('accounts')" name="accounts">
         <account-list />
       </el-tab-pane>
-      <el-tab-pane label="Currencies" name="currencies">
+      <el-tab-pane :label="$t('currencies')" name="currencies">
         <currency-list />
       </el-tab-pane>
     </el-tabs>
@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import AccountList from "./account/AccountList";
-import CurrencyList from "./currency/CurrencyList";
+import AccountList from "@/views/account/AccountList";
+import CurrencyList from "@/views/currency/CurrencyList";
 
 export default {
   name: "settings",

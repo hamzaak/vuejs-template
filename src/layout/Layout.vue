@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import Navbar from "./Navbar";
-import Content from "./Content";
+import Navbar from "@/layout/Navbar";
+import Content from "@/layout/Content";
 
 export default {
   name: "layout",

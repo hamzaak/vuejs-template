@@ -4,7 +4,7 @@
       <el-col :span="24">
         <el-card class="box-card no-min-width">
           <page-header>
-            <template v-slot:left>Transactions</template>
+            <template v-slot:left>{{ $t('chartTransactions') }}</template>
           </page-header>
           <apexchart type=bar height="200px" :options="transactionsOptions" :series="transactionsSeries" />
         </el-card>
@@ -14,7 +14,7 @@
       <el-col :span="12">
         <el-card class="box-card no-min-width">
           <page-header>
-            <template v-slot:left>Account Quantity Distribution</template>
+            <template v-slot:left>{{ $t('chartAccountQuantityDistribution') }}</template>
           </page-header>
           <apexchart type=pie :options="accountSumsOptions" :series="accountSumsSeries" />
         </el-card>
@@ -22,7 +22,7 @@
       <el-col :span="12">
         <el-card class="box-card no-min-width">
           <page-header>
-            <template v-slot:left>Overall Change</template>
+            <template v-slot:left>{{ $t('chartOverallChange') }}</template>
           </page-header>
           <apexchart type=area height="300px" :options="overallChangeOptions" :series="overallChangeSeries" />
         </el-card>
@@ -33,15 +33,15 @@
 </template>
 
 <script>
-import TransactionsApi from "../api/transactionsApi";
-import PageHeader from "../components/PageHeader";
-import { currency } from "../utils/object-utils";
+import TransactionsApi from "@/api/transactionsApi";
+import PageHeader from "@/components/PageHeader";
+import { currency } from "@/utils/object-utils";
 
 export default {
   data: function() {
     return {
       overallChangeSeries: [{
-        name: "Amount",
+        name: this.$t('amount'),
         data: []
       }],
       overallChangeOptions: {
@@ -68,7 +68,7 @@ export default {
         }
       },
       transactionsSeries: [{
-        name: 'Amount',
+        name: this.$t('amount'),
         data: []
       }],
       transactionsOptions: {

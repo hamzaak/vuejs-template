@@ -1,6 +1,6 @@
 import Axios from "axios";
-import { BASE_URL } from "./config";
-import { TOKEN, USER } from "../store/constants/storage";
+import { BASE_URL } from "@/api/config";
+import { TOKEN, USER } from "@/store/constants/storage";
 
 const authApi = {
   setLocalUser(user) {

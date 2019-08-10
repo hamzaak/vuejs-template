@@ -1,8 +1,8 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Axios from "axios";
-import AuthApi from "../api/authApi";
-import routes from "./routes";
+import AuthApi from "@/api/authApi";
+import routes from "@/router/routes";
 
 Vue.use(Router);
 

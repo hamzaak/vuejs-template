@@ -1,14 +1,14 @@
 <template>
   <el-card class="box-card">
     <page-header :onBack="_onCancel">
-      <template v-slot:left>Create Account</template>
+      <template v-slot:left>{{$t('createAccount')}}</template>
       <template v-slot:right>
-        <el-tooltip effect="dark" content="Save" placement="bottom">
+        <el-tooltip effect="dark" :content="$t('save')" placement="bottom">
           <el-button type="primary" size="mini" :loading="form.loading" plain @click="_onSave()">
             <v-icon name="check" />
           </el-button>
         </el-tooltip>
-        <el-tooltip effect="dark" content="Cancel" placement="bottom">
+        <el-tooltip effect="dark" :content="$t('cancel')" placement="bottom">
           <el-button type="danger" size="mini" plain @click="_onCancel()">
             <v-icon name="times" />
           </el-button>
@@ -18,28 +18,28 @@
     <el-form :model="form" :ref="form.name" :rules="rules" label-width="120px" label-position="left">
       <el-row :gutter="24">
         <el-col :span="12">
-          <el-form-item label="Directory">
+          <el-form-item :label="$t('directory')">
             <el-select v-model="form.directoryId" :clearable="false" :editable="false" class="block">
               <el-option v-for="item in form.directories" :key="item.id" :label="item.name" :value="item.id" />
             </el-select>
           </el-form-item>
-          <el-form-item label="Currency">
+          <el-form-item :label="$t('currency')">
             <el-select v-model="form.currencyId" :clearable="false" :editable="false" class="block">
               <el-option v-for="item in form.currencies" :key="item.id" :label="item.name" :value="item.id" />
             </el-select>
           </el-form-item>
-          <el-form-item label="Description" prop="description">
+          <el-form-item :label="$t('description')" prop="description">
             <el-input type="textarea" v-model="form.description" class="block"/>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="Account Name">
-            <el-input placeholder="Please input account name" v-model="form.accountName" class="block"></el-input>
+          <el-form-item :label="$t('accountName')">
+            <el-input :placeholder="$t('accountName')" v-model="form.accountName" class="block"></el-input>
           </el-form-item>
-          <el-form-item label="Type">
+          <el-form-item :label="$t('type')">
             <el-select v-model="form.type" class="block">
-              <el-option label="Income" :value="1" />
-              <el-option label="Expense" :value="2" />
+              <el-option :label="$t('typeOptIncome')" :value="1" />
+              <el-option :label="$t('typeOptExpense')" :value="2" />
             </el-select>
           </el-form-item>
         </el-col>
@@ -49,12 +49,12 @@
 </template>
 
 <script>
-import * as ACTION from "../../store/constants/actions";
-import * as MODULE from "../../store/constants/modules";
-import CurrenciesApi from "../../api/currenciesApi";
-import DirectoriesApi from "../../api/directoriesApi";
-import AccountsApi from "../../api/accountsApi";
-import PageHeader from "../../components/PageHeader";
+import * as ACTION from "@/store/constants/actions";
+import * as MODULE from "@/store/constants/modules";
+import CurrenciesApi from "@/api/currenciesApi";
+import DirectoriesApi from "@/api/directoriesApi";
+import AccountsApi from "@/api/accountsApi";
+import PageHeader from "@/components/PageHeader";
 
 export default {
   name: "account-create",
@@ -75,13 +75,13 @@ export default {
         loading: false
       },
       rules: {
-          directoryName: [
-            { required: true, message: 'Please input directory name', trigger: 'blur' },
-            { min: 3, message: 'Directory name min length should be 5', trigger: 'blur' }
+          accountName: [
+            { required: true, message: this.$t('accountNameRequiredMsg'), trigger: 'blur' },
+            { min: 3, message: this.$t('accountNameRequiredMinMsg'), trigger: 'blur' }
           ],
           description: [
-            { required: true, message: 'Please input transaction description', trigger: 'blur' },
-            { min: 5, message: 'Description min length should be 5', trigger: 'blur' }
+            { required: true, message: this.$t('descriptionRequiredMsg'), trigger: 'blur' },
+            { min: 5, message: this.$t('descriptionRequiredMinMsg'), trigger: 'blur' }
           ]
         }
     };
@@ -103,7 +103,7 @@ export default {
         AccountsApi.add(account)
           .then((res) => {
             this.form.loading = false;
-            this.$message({ message: "Account has been created successfuly.", type: "success" });
+            this.$message({ message: this.$t('createAccountSuccessMsg'), type: "success" });
             this.$store.dispatch(`${MODULE.ACCOUNT}/${ACTION.ACCOUNT_ADD}`, res);
           })
           .catch(err => {

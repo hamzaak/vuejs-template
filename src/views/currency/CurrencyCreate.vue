@@ -1,14 +1,14 @@
 <template>
   <el-card class="box-card">
     <page-header :onBack="_onCancel">
-      <template v-slot:left>Create Currency</template>
+      <template v-slot:left>{{$t('createCurrency')}}</template>
       <template v-slot:right>
-        <el-tooltip effect="dark" content="Save" placement="bottom">
+        <el-tooltip effect="dark" :content="$t('save')" placement="bottom">
           <el-button type="primary" size="mini" :loading="form.loading" plain @click="_onSave()">
             <v-icon name="check" />
           </el-button>
         </el-tooltip>
-        <el-tooltip effect="dark" content="Cancel" placement="bottom">
+        <el-tooltip effect="dark" :content="$t('cancel')" placement="bottom">
           <el-button type="danger" size="mini" plain @click="_onCancel()">
             <v-icon name="times" />
           </el-button>
@@ -18,12 +18,12 @@
     <el-form :model="form" :ref="form.name" :rules="rules" label-width="120px" label-position="left">
       <el-row :gutter="24">
         <el-col :span="12">
-          <el-form-item label="Currency Name">
-            <el-input placeholder="Please input currency name" v-model="form.currencyName" class="block"></el-input>
+          <el-form-item :label="$t('currencyName')">
+            <el-input :placeholder="$t('currencyName')" v-model="form.currencyName" class="block"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-            <el-form-item label="Currency Value">
+            <el-form-item :label="$t('currencyValue')">
                 <el-input-number v-model="form.currencyValue" controls-position="right" class="block"/>
             </el-form-item>
         </el-col>
@@ -33,8 +33,8 @@
 </template>
 
 <script>
-import CurrenciesApi from "../../api/currenciesApi";
-import PageHeader from "../../components/PageHeader";
+import CurrenciesApi from "@/api/currenciesApi";
+import PageHeader from "@/components/PageHeader";
 
 export default {
   name: "directory-create",
@@ -51,10 +51,10 @@ export default {
       },
       rules: {
           currencyName: [
-            { required: true, message: 'Please input currency name', trigger: 'blur' }
+            { required: true, message: this.$t('currencyNameRequiredMsg'), trigger: 'blur' }
           ],
           currencyValue: [
-            { required: true, message: 'Please input currency value', trigger: 'blur' }
+            { required: true, message: this.$t('currencyValueRequiredMsg'), trigger: 'blur' }
           ]
         }
     };
@@ -73,7 +73,7 @@ export default {
         CurrenciesApi.add(currency)
           .then((res) => {
             this.form.loading = false;
-            this.$message({ message: "Currency has been created successfuly.", type: "success" });
+            this.$message({ message: this.$t('createCurrencySuccessMsg'), type: "success" });
           })
           .catch(err => {
             this.form.loading = false;

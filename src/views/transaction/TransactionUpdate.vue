@@ -1,14 +1,14 @@
 <template>
   <el-card class="box-card">
     <page-header :onBack="_onCancel">
-      <template v-slot:left>Update Transaction</template>
+      <template v-slot:left>{{$t('updateTransaction')}}</template>
       <template v-slot:right>
-        <el-tooltip effect="dark" content="Update" placement="bottom">
+        <el-tooltip effect="dark" :content="$t('update')" placement="bottom">
           <el-button type="warning" size="mini" :loading="form.loading" plain @click="_onUpdate()">
             <v-icon name="check" />
           </el-button>
         </el-tooltip>
-        <el-tooltip effect="dark" content="Cancel" placement="bottom">
+        <el-tooltip effect="dark" :content="$t('cancel')" placement="bottom">
           <el-button type="danger" size="mini" plain @click="_onCancel()">
             <v-icon name="times" />
           </el-button>
@@ -17,29 +17,29 @@
     </page-header>
     <el-form :model="form" :rules="rules" :ref="form.name" label-width="120px" label-position="left">
       <el-row :gutter="24">
-        <el-col :span="12">
-          <el-form-item label="Account" prop="accountId">
-           <el-cascader v-model="form.accountId" :options="accountSelectOptions" />
+         <el-col :span="12">
+          <el-form-item :label="$t('account')">
+            <el-cascader v-model="form.accountId" :options="accountSelectOptions" class="block" />
           </el-form-item>
-          <el-form-item label="Type" prop="type">
-            <el-select v-model="form.type" placeholder="please select type">
-              <el-option label="Income" :value="1" />
-              <el-option label="Expense" :value="2" />
+          <el-form-item :label="$t('type')">
+            <el-select v-model="form.type" class="block">
+              <el-option :label="$t('typeOptIncome')" :value="1" />
+              <el-option :label="$t('typeOptExpense')" :value="2" />
             </el-select>
           </el-form-item>
-          <el-form-item label="Date" prop="date">
+          <el-form-item :label="$t('date')">
             <el-date-picker
-              type="date" :clearable="false" :editable="false" placeholder="Pick a date" v-model="form.date"
-              format="dd.MM.yyyy" value-format="yyyy-MM-dd"
+              type="date" :clearable="false" :editable="false" v-model="form.date"
+              format="dd.MM.yyyy" value-format="yyyy-MM-dd" class="block"
             />
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="Amount" prop="amount">
-            <el-input-number v-model="form.amount" controls-position="right" class="block"></el-input-number>
+          <el-form-item :label="$t('amount')">
+            <el-input-number v-model="form.amount" controls-position="right" class="block"/>
           </el-form-item>
-          <el-form-item label="Description" prop="description">
-            <el-input type="textarea" v-model="form.description" />
+          <el-form-item :label="$t('description')" prop="description">
+            <el-input type="textarea" v-model="form.description" class="block"/>
           </el-form-item>
         </el-col>
       </el-row>
@@ -48,8 +48,8 @@
 </template>
 
 <script>
-import TransactionsApi from "../../api/transactionsApi";
-import PageHeader from "../../components/PageHeader";
+import TransactionsApi from "@/api/transactionsApi";
+import PageHeader from "@/components/PageHeader";
 
 export default {
   name: "transaction-update",
@@ -70,11 +70,11 @@ export default {
       },
       rules: {
           amount: [
-            { required: true, message: 'Please input transaction amount', trigger: 'blur' }
+            { required: true, message: this.$t('amountRequiredMsg'), trigger: 'blur' }
           ],
           description: [
-            { required: true, message: 'Please input transaction description', trigger: 'blur' },
-            { min: 5, message: 'Description min length should be 5', trigger: 'blur' }
+            { required: true, message: this.$t('descriptionRequiredMsg'), trigger: 'blur' },
+            { min: 5, message: this.$t('descriptionRequiredMinMsg'), trigger: 'blur' }
           ]
         }
     };
@@ -123,7 +123,7 @@ export default {
         TransactionsApi.update(transaction)
           .then(() => {
             this.form.loading = false;
-            this.$message({ message: "Transaction has been updated successfuly.", type: "success" });
+            this.$message({ message: this.$t('updateTransactionSuccessMsg'), type: "success" });
           })
           .catch(err => {
             this.form.loading = false;

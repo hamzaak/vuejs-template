@@ -47,7 +47,7 @@
         <el-col :span="12">
            <el-form-item label="Date">
             <el-date-picker
-              type="date" :clearable="false" :editable="false" placeholder="Pick a date" v-model="form.date"
+              v-model="form.date" type="date" :clearable="false" :editable="false"
               format="dd.MM.yyyy" value-format="yyyy-MM-dd" class="block"
             />
           </el-form-item>
@@ -66,9 +66,9 @@
 </template>
 
 <script>
-import AccountsApi from "../../api/accountsApi";
-import TransactionsApi from "../../api/transactionsApi";
-import PageHeader from "../../components/PageHeader";
+import AccountsApi from "@/api/accountsApi";
+import TransactionsApi from "@/api/transactionsApi";
+import PageHeader from "@/components/PageHeader";
 
 export default {
   name: "transaction-transfer",
@@ -100,11 +100,9 @@ export default {
         loading: false
       },
       rules: {
-          fromAccountId: [{ required: true, message: 'Please select account [from]', trigger: 'blur' }],
-          toAccountId: [{ required: true, message: 'Please select account [to]', trigger: 'blur' }],
-          amount: [{ required: true, message: 'Please input transaction amount', trigger: 'blur' }],
+          amount: [{ required: true, message: 'Please input amount', trigger: 'blur' }],
           description: [
-            { required: true, message: 'Please input transaction description', trigger: 'blur' },
+            { required: true, message: 'Please input description', trigger: 'blur' },
             { min: 5, message: 'Description min length should be 5', trigger: 'blur' }
           ]
         }
@@ -197,7 +195,6 @@ export default {
       .then(res => {
         this.form.fromAccount = res;
       }).catch(err => console.log(err));
-    // this._onFromAccountChange(prmAccountId);
   }
 };
 </script>

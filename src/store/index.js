@@ -1,8 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import directoryModule from "./modules/directoryModule";
-import accountModule from "./modules/accountModule";
-import transactionModule from "./modules/transactionModule";
+import directoryModule from "@/store/modules/directoryModule";
+import accountModule from "@/store/modules/accountModule";
+import transactionModule from "@/store/modules/transactionModule";
 
 Vue.use(Vuex);
 
