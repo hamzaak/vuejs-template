@@ -53,6 +53,11 @@ form {
   padding: 0;
 }
 
+.el-col {
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+}
+
 .el-table th {
   background: #ecf5ff;
   color: #3a8ee6;

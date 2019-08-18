@@ -78,6 +78,7 @@ const messages = {
       save: "Save",
       settings: "Settings",
       signIn: "Sign in",
+      sum: "Sum",
       summary: "Summary",
 
       transactions: "Transactions",
@@ -100,6 +101,7 @@ const messages = {
       usernameRequiredMsg: "Username is required",
      
       value: "Value",
+      view: "View"
     },
     "tr": {
       account: "Hesap",
@@ -175,6 +177,7 @@ const messages = {
       save: "Kaydet",
       settings: "Ayarlar",
       signIn: "Giriş yap",
+      sum: "Toplam",
       summary: "Özet",
 
       transactions: "Hesap Hareketleri",
@@ -197,6 +200,7 @@ const messages = {
       usernameRequiredMsg: "Kullanıcı adı alanı zorunlu",
      
       value: "Değer",
+      view: "Görüntüle"
     }
 };
 

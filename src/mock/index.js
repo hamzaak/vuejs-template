@@ -367,7 +367,7 @@ export default {
               return res;
           }, {});
 
-          resolve([200, result]);
+          resolve([200, result.filter(x => x.sum > 0)]);
         }, 100);
       });
     });
@@ -405,8 +405,35 @@ export default {
             
             return res;
           }, {});
+          resolve([200, result.filter(x => x.sum !== 0)]);
+        }, 100);
+      });
+    });
 
-          resolve([200, result]);
+    mock.onGet("/transactions/getaccountsreport").reply(config => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          var result = [];
+          _transactions.reduce(function (res, item) {
+            let account = _accounts.filter(x => x.id == item.accountId)[0]
+            if (!res[item.accountId]) {
+              res[item.accountId] = {
+                accountId: item.accountId,
+                description: item.description,
+                account:`${account.directory.name} > ${account.name} (${account.currency.name})`,
+                sum: 0
+              };
+              result.push(res[item.accountId]);
+            }
+            let value = item.amount;
+            value = Math.round(value * 100) / 100;
+            res[item.accountId].sum = item.type == 1
+              ? res[item.accountId].sum + value 
+              : res[item.accountId].sum - value; 
+            return res;
+          }, {});
+
+          resolve([200, result.filter(x => x.sum > 0)]);
         }, 100);
       });
     });

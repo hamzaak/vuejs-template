@@ -25,6 +25,9 @@ const transactionsApi = {
   },
   getSumsByDate() {
     return Axios({ url: `${BASE_URL}/transactions/getsumsbydate`, method: "GET" }).then(res => res.data);
+  },
+  getAccountsReport() {
+    return Axios({ url: `${BASE_URL}/transactions/getaccountsreport`, method: "GET" }).then(res => res.data);
   }
 };
 
