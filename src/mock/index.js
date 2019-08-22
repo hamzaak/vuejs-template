@@ -372,14 +372,56 @@ export default {
       });
     });
 
+    mock.onGet("/transactions/gettransactionreport").reply(config => {
+      const { date } = JSON.parse(config.params.query);
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          var result = [];
+          const filteredItems = _transactions
+            .filter(x => (new Date(x.date)) >= (new Date(date[0])) && (new Date(x.date)) <= (new Date(date[1])))
+            .sort(function(a, b) {
+              var dateA = new Date(a.date), dateB = new Date(b.date);
+              return dateA - dateB;
+            });
+          let total = 0;
+          filteredItems.reduce(function (res, item) {
+            if (!res[item.date]) {
+                res[item.date] = {
+                    sum: 0,
+                    total: 0,
+                    date: item.date
+                };
+                result.push(res[item.date]);
+            }
+            const account = _accounts.filter(x => x.id == item.accountId)[0];
+            let value = item.amount * account.currency.value;
+            total = account.type == 1
+              ? item.type == 1 ? total + value : total - value
+              : item.type == 1 ? total - value : total + value;
+
+            res[item.date].total = total;
+
+            value = Math.round(value * 100) / 100
+            res[item.date].sum = account.type == 1
+              ? item.type == 1 ? res[item.date].sum + value : res[item.date].sum - value
+              : item.type == 1 ? res[item.date].sum - value : res[item.date].sum + value;
+            
+            return res;
+          }, {});
+          resolve([200, result.filter(x => x.sum !== 0)]);
+        }, 100);
+      });
+    });
+
     mock.onGet("/transactions/getsumsbydate").reply(config => {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           var result = [];
-          const filteredItems = _transactions.sort(function(a, b) {
-            var dateA = new Date(a.date), dateB = new Date(b.date);
-            return dateA - dateB;
-          });
+          const filteredItems = _transactions
+            .sort(function(a, b) {
+              var dateA = new Date(a.date), dateB = new Date(b.date);
+              return dateA - dateB;
+            });
           let total = 0;
           filteredItems.reduce(function (res, item) {
             if (!res[item.date]) {

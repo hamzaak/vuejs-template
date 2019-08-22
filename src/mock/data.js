@@ -24,7 +24,7 @@ export const accounts = [
 ];
 
 export const transactions = [
-  { id: "356c1410-391f-47a1-8bb9-95bc83263445", date: "2019-07-01", accountId: 1, amount: 3000, type: 1, description: "salary payment" },
+  { id: "356c1410-391f-47a1-8bb9-95bc83263445", date: "2019-01-01", accountId: 1, amount: 3000, type: 1, description: "salary payment" },
   { id: "9699143c-2f0a-48e0-aa49-3975972ad339", date: "2019-07-14", accountId: 1, amount: 500, type: 2, description: "credit card payment" },
   { id: "1923a1be-3bfc-470c-8c31-bd37a73fb9a6", date: "2019-07-14", accountId: 4, amount: 500, type: 1, description: "credit card payment" },
   { id: "4e797ad4-00e2-4dc6-889b-ab74d6c122ce", date: "2019-07-15", accountId: 1, amount: 350, type: 2, description: "kitchen renovation" },
