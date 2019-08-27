@@ -32,6 +32,7 @@
     "@vue/eslint-config-prettier": "^4.0.1",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
+    "eslint-utils": "^1.4.2",
     "eslint-plugin-vue": "^5.0.0",
     "json-server": "^0.15.0",
     "node-sass": "^4.12.0",
